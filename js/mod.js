@@ -1,24 +1,24 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
-	pointsName: "points",
+	name: "The / Dir Tree",
+	author: "A Profesional Idiot",
+	pointsName: "Hertz",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "",
-	discordLink: "",
+	discordName: "Error 404: Not Found",
+	discordLink: "Error 404: Not Found",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "Go Play The Game",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
+	<h3>v0.1</h3><br>
+		- Forked TMT.<br>
 		- Added stuff.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
@@ -42,6 +42,8 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade('A', 11)) gain = gain.times(2)
+	if (hasUpgrade('A', 12)) gain = gain.times(upgradeEffect('A', 12))
 	return gain
 }
 
