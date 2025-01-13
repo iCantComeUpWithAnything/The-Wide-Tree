@@ -2,7 +2,7 @@ let modInfo = {
 	name: "The / Dir Tree",
 	author: "A Profesional Idiot",
 	pointsName: "Hertz",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["Layers/layer-CPU.js", "Layers/layer-ASM.js", "tree.js"],
 
 	discordName: "Error 404: Not Found",
 	discordLink: "Error 404: Not Found",
