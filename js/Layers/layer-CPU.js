@@ -4,7 +4,7 @@ addLayer("A", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
-		points: new Decimal(600000),
+		points: new Decimal(0),
     }},
     color: "#5C5C5C",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
@@ -30,6 +30,32 @@ addLayer("A", {
         if (layers[ThisLayer].row > this.row) {
             let keep = [];
             layerDataReset("A", keep)
+        }
+    },
+    tabFormat: {
+        "Main":  {
+            content: [
+                "main-display",
+                "prestige-button", 
+                "blank",
+                ["display-text", function() {
+                    return 'You have ' + format(player.points) + ' Hertz'
+                }],
+                "blank",
+                ["row", [["upgrade", 11], ["upgrade", 12], ["upgrade", 13]]]
+            ]
+        },
+        "Architecture": {
+            content: [
+                "main-display",
+                "prestige-button", 
+                "blank",
+                ["display-text", function() {
+                    return 'You have ' + format(player.points) + ' Hertz'
+                }],
+                "blank",
+                ["row", [["buyable", 11]]],
+            ]
         }
     },
     upgrades: {
@@ -59,5 +85,20 @@ addLayer("A", {
             },
             effectDisplay() {return format(upgradeEffect(this.layer, this.id))+"x"},
         }
+    },
+    buyables:  {
+        11:  {
+            cost(x) {return new Decimal(1).mul(x)},
+            display() {return "Cost: "+format()+"<br>Current Cores: "
+                        +format(player[this.layer].buyables[this.id], 0)+
+                        "<br>The more cores you have, the more Hertz you get."},
+            title() {return "More Cores"},
+            canAfford() {return player[this.layer].points.gte(this.cost())},
+            buy() {
+                player[this.layer].points = player[this.layer].points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            purchaseLimit() {return new Decimal(128)}
+        },
     },
 })
